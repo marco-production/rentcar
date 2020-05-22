@@ -2085,6 +2085,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 
 var $ = jquery__WEBPACK_IMPORTED_MODULE_1___default.a;
@@ -2100,7 +2104,10 @@ var $ = jquery__WEBPACK_IMPORTED_MODULE_1___default.a;
         estado: ''
       },
       isActive: '',
-      hasError: ''
+      hasError: '',
+      DbName: null,
+      showAlert: false,
+      textAlert: ''
     };
   },
   created: function created() {
@@ -2133,6 +2140,9 @@ var $ = jquery__WEBPACK_IMPORTED_MODULE_1___default.a;
 
           axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/tipovehiculo', param).then(function (res) {
             _this2.Items.push(res.data);
+
+            _this2.textAlert = "El tipo de vehiculo ".concat(res.data.name, " ha sido a\xF1adido exitosamente!!");
+            _this2.showAlert = true;
           })["catch"](function (err) {
             console.log(err);
           });
@@ -2153,6 +2163,7 @@ var $ = jquery__WEBPACK_IMPORTED_MODULE_1___default.a;
       this.myData.descripcion = data.descripcion;
       this.myData.estado = data.estado;
       this.modoCrearItem = false;
+      this.showAlert = false;
     },
     updateData: function updateData(data) {
       var _this3 = this;
@@ -2174,6 +2185,8 @@ var $ = jquery__WEBPACK_IMPORTED_MODULE_1___default.a;
             });
 
             _this3.Items[index] = res.data;
+            _this3.showAlert = true;
+            _this3.textAlert = "El tipo de vehiculo #".concat(data.id, " ha sido actualizado exitosamente!!");
           })["catch"](function (err) {
             console.log(err);
           });
@@ -2191,6 +2204,8 @@ var $ = jquery__WEBPACK_IMPORTED_MODULE_1___default.a;
     deleteDate: function deleteDate(data, index) {
       var _this4 = this;
 
+      this.showAlert = false;
+
       if (confirm("\xBFDesea eliminar la tarea ".concat(data.name, "?"))) {
         axios__WEBPACK_IMPORTED_MODULE_0___default.a["delete"]("/tipovehiculo/".concat(data.slug)).then(function (res) {
           _this4.Items.splice(index, 1);
@@ -2203,6 +2218,7 @@ var $ = jquery__WEBPACK_IMPORTED_MODULE_1___default.a;
       return;
     },
     showData: function showData(data) {
+      this.showAlert = false;
       $('#largeModalLabel').html("Tipo de vehiculo - ".concat(data.name));
       $('#dataDescription').html(data.descripcion);
     },
@@ -2215,6 +2231,46 @@ var $ = jquery__WEBPACK_IMPORTED_MODULE_1___default.a;
         estado: ''
       };
     }
+  },
+  //Antes del mounted - Obtener el JSON de la URL por metodo GET
+  beforeMount: function beforeMount() {
+    var _this5 = this;
+
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('http://127.0.0.1:8000/empleado/typevehiculenames').then(function (response) {
+      return _this5.DbName = response.data.map(function (info) {
+        return info.name;
+      });
+    });
+  },
+  //Antes de cargar el DOM del HTML
+  mounted: function mounted() {
+    var _this6 = this;
+
+    var isUnique = function isUnique(value) {
+      return new Promise(function (resolve) {
+        setTimeout(function () {
+          if (_this6.DbName.indexOf(value) === -1) {
+            return resolve({
+              valid: true
+            });
+          }
+
+          return resolve({
+            valid: false,
+            data: {
+              message: "".concat(value, " ya est\xE1 en uso.")
+            }
+          });
+        }, 200);
+      });
+    };
+
+    vee_validate__WEBPACK_IMPORTED_MODULE_2__["Validator"].extend("unique", {
+      validate: isUnique,
+      getMessage: function getMessage(field, params, data) {
+        return data.message;
+      }
+    });
   }
 });
 
@@ -48889,6 +48945,17 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
+    _vm.showAlert
+      ? _c(
+          "div",
+          {
+            staticClass: "alert bg-green alert-dismissible",
+            attrs: { role: "alert" }
+          },
+          [_vm._m(0), _vm._v("\n        " + _vm._s(_vm.textAlert) + "\n    ")]
+        )
+      : _vm._e(),
+    _vm._v(" "),
     _c("div", { staticClass: "row clearfix" }, [
       _c("div", { staticClass: "col-lg-12 col-md-12 col-sm-12 col-xs-12" }, [
         _c("div", { staticClass: "card" }, [
@@ -48917,7 +48984,7 @@ var render = function() {
                         _c("b", [_vm._v("Nombre")]),
                         _vm._v(" "),
                         _c("div", { staticClass: "input-group" }, [
-                          _vm._m(0),
+                          _vm._m(1),
                           _vm._v(" "),
                           _c(
                             "div",
@@ -48936,8 +49003,10 @@ var render = function() {
                                   {
                                     name: "validate",
                                     rawName: "v-validate",
-                                    value: "required|alpha_spaces|max:40",
-                                    expression: "'required|alpha_spaces|max:40'"
+                                    value:
+                                      "required|alpha_spaces|max:40|unique",
+                                    expression:
+                                      "'required|alpha_spaces|max:40|unique'"
                                   },
                                   {
                                     name: "model",
@@ -49140,7 +49209,7 @@ var render = function() {
                                     name: "descripcion",
                                     value: "",
                                     placeholder:
-                                      "Ingresa la dirección del tipo de vehiculo"
+                                      "Ingresa la descripción del tipo de vehiculo"
                                   },
                                   domProps: { value: _vm.myData.descripcion },
                                   on: {
@@ -49222,7 +49291,7 @@ var render = function() {
                         _c("b", [_vm._v("Nombre")]),
                         _vm._v(" "),
                         _c("div", { staticClass: "input-group" }, [
-                          _vm._m(1),
+                          _vm._m(2),
                           _vm._v(" "),
                           _c(
                             "div",
@@ -49493,7 +49562,7 @@ var render = function() {
                                     name: "descripcion",
                                     value: "",
                                     placeholder:
-                                      "Ingresa la dirección del tipo de vehiculo"
+                                      "Ingresa la descripción del tipo de vehiculo"
                                   },
                                   domProps: { value: _vm.myData.descripcion },
                                   on: {
@@ -49582,7 +49651,7 @@ var render = function() {
       ])
     ]),
     _vm._v(" "),
-    _vm._m(2),
+    _vm._m(3),
     _vm._v(" "),
     _c("div", { staticClass: "row clearfix" }, [
       _c("div", { staticClass: "col-lg-12 col-md-12 col-sm-12 col-xs-12" }, [
@@ -49592,7 +49661,7 @@ var render = function() {
               "table",
               { staticClass: "table" },
               [
-                _vm._m(3),
+                _vm._m(4),
                 _vm._v(" "),
                 _vm._l(_vm.Items, function(item, index) {
                   return _c("tbody", { key: index }, [
@@ -49768,10 +49837,27 @@ var render = function() {
       ])
     ]),
     _vm._v(" "),
-    _vm._m(4)
+    _vm._m(5)
   ])
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "close",
+        attrs: {
+          type: "button",
+          "data-dismiss": "alert",
+          "aria-label": "Close"
+        }
+      },
+      [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+    )
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement

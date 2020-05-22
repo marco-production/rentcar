@@ -25,6 +25,8 @@ Route::get('/nuevo/usuario', 'UserController@create')->name('create-user');
 
 Route::resource('/tipovehiculo', 'TipovehiculoController');
 Route::group(['prefix' => 'empleado'], function () {
+    Route::get('/typevehiculenames', 'TipovehiculoController@getNames');
+    ///////
     Route::get('/inicio', 'TipovehiculoController@home')->name('empleado-home');
     Route::get('/tipo-vehiculo', 'TipovehiculoController@create')->name('empleado-tipo-vehiculo');
 });

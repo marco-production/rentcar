@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Tipovehiculo;
 use Illuminate\Http\Request;
+use App\Http\Requests\BasicValidation;
 
 class TipovehiculoController extends Controller
 {
@@ -25,6 +26,12 @@ class TipovehiculoController extends Controller
             return view('empleado.index');
         }
     }
+    /* Obtener todos los nombres */
+    public function getNames()
+    {
+        $names = Tipovehiculo::select('name')->get();
+        return $names;
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -42,7 +49,7 @@ class TipovehiculoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(BasicValidation $request)
     {
         $tipo_vehiculo = new Tipovehiculo();
         $tipo_vehiculo->name = $request->name;
@@ -83,7 +90,7 @@ class TipovehiculoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(BasicValidation $request, $id)
     {
         $tipo_vehiculo = Tipovehiculo::find($id);
         $tipo_vehiculo->name = $request->name;

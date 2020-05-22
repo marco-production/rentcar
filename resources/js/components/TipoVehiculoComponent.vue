@@ -1,5 +1,9 @@
 <template>
 <div>
+    <div class="alert bg-green alert-dismissible" v-if="showAlert" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+        {{textAlert}}
+    </div>
     <div class="row clearfix">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <div class="card">
@@ -17,7 +21,7 @@
                                         <i class="material-icons">reorder</i>
                                     </span>
                                     <div class="form-line" v-bind:class="[!errors.has('nombre') ? hasError: 'error focused', isActive]">
-                                        <input type="text" name="nombre" class="form-control" v-validate="'required|alpha_spaces|max:40'" v-model="myData.name" placeholder="Ingresa nombre">
+                                        <input type="text" name="nombre" class="form-control" v-validate="'required|alpha_spaces|max:40|unique'" v-model="myData.name" placeholder="Ingresa nombre">
                                     </div>
                                     <span v-show="errors.has('nombre')" class="invalid-feedback" style="color:#dc3545; font-size:12px;" role="alert">
                                         <strong>{{ errors.first('nombre') }}</strong>
@@ -44,7 +48,7 @@
                                 <b>Descripcion</b>
                                 <div class="input-group">
                                     <div class="form-line" v-bind:class="[!errors.has('descripcion') ? hasError: 'error focused', isActive]">
-                                        <input type="text" v-model="myData.descripcion" v-validate="'required|max:574'" class="form-control" name="descripcion" value="" placeholder="Ingresa la dirección del tipo de vehiculo">
+                                        <input type="text" v-model="myData.descripcion" v-validate="'required|max:574'" class="form-control" name="descripcion" value="" placeholder="Ingresa la descripción del tipo de vehiculo">
                                     </div>
                                     <span v-show="errors.has('descripcion')" class="invalid-feedback" style="color:#dc3545; font-size:12px;" role="alert">
                                         <strong>{{ errors.first('descripcion') }}</strong>
@@ -92,7 +96,7 @@
                                 <b>Descripcion</b>
                                 <div class="input-group">
                                     <div class="form-line" v-bind:class="[!errors.has('descripcion') ? hasError: 'error focused', isActive]">
-                                        <input type="text" v-model="myData.descripcion" class="form-control" v-validate="'required|max:574'" name="descripcion" value="" placeholder="Ingresa la dirección del tipo de vehiculo">
+                                        <input type="text" v-model="myData.descripcion" class="form-control" v-validate="'required|max:574'" name="descripcion" value="" placeholder="Ingresa la descripción del tipo de vehiculo">
                                     </div>
                                     <span v-show="errors.has('descripcion')" class="invalid-feedback" style="color:#dc3545; font-size:12px;" role="alert">
                                         <strong>{{ errors.first('descripcion') }}</strong>
@@ -184,6 +188,9 @@ export default {
             myData: {name:'', descripcion:'', estado:''},
             isActive: '',
             hasError: '',
+            DbName: null,
+            showAlert:false,
+            textAlert:'',
         }
     },
     created() {
@@ -200,7 +207,6 @@ export default {
             });
         },
         postData(){
-
             this.$validator.validateAll().then((result) => {
                 if (result) {
                     this.$validator.pause();
@@ -211,6 +217,8 @@ export default {
                     axios.post('/tipovehiculo',param)
                     .then((res)=>{
                         this.Items.push(res.data);
+                        this.textAlert = `El tipo de vehiculo ${res.data.name} ha sido añadido exitosamente!!`;
+                        this.showAlert = true;
                     })
                     .catch((err)=>{
                         console.log(err);
@@ -228,7 +236,8 @@ export default {
             this.myData.name = data.name;
             this.myData.descripcion = data.descripcion;
             this.myData.estado = data.estado;
-            this.modoCrearItem = false;           
+            this.modoCrearItem = false;    
+            this.showAlert = false;       
         },
         updateData(data){
             this.$validator.validateAll().then((result) => {
@@ -241,6 +250,8 @@ export default {
                         this.cancelUpdate(true);
                         let index = this.Items.findIndex(laNota => laNota.id == data.id);
                         this.Items[index] = res.data;
+                        this.showAlert = true;
+                        this.textAlert = `El tipo de vehiculo #${data.id} ha sido actualizado exitosamente!!`
                     })
                     .catch((err)=>{
                         console.log(err);
@@ -254,6 +265,7 @@ export default {
             });
         },
         deleteDate(data,index){
+            this.showAlert = false;
             if(confirm(`¿Desea eliminar la tarea ${data.name}?`)){
                 axios.delete(`/tipovehiculo/${data.slug}`)
                 .then((res)=>{
@@ -267,6 +279,7 @@ export default {
             return;
         },
         showData(data){
+            this.showAlert = false;
             $('#largeModalLabel').html(`Tipo de vehiculo - ${data.name}`);
             $('#dataDescription').html(data.descripcion);
         },
@@ -274,7 +287,36 @@ export default {
             this.$validator.reset();
             this.modoCrearItem = value;
             this.myData = {name:'', descripcion:'', estado:''};
-        }
+        },
+    },
+    //Antes del mounted - Obtener el JSON de la URL por metodo GET
+    beforeMount() {
+        axios.get('http://127.0.0.1:8000/empleado/typevehiculenames')
+        .then(response => (this.DbName = response.data.map((info) => info.name)));
+    },
+    //Antes de cargar el DOM del HTML
+    mounted() {
+        const isUnique = value =>
+            new Promise(resolve => {
+                setTimeout(() => {
+                    if (this.DbName.indexOf(value) === -1) {
+                        return resolve({
+                            valid: true
+                        });
+                    }
+                    return resolve({
+                        valid: false,
+                        data: {
+                            message: `${value} ya está en uso.`
+                        }
+                    });
+                }, 200);
+            });
+
+        Validator.extend("unique", {
+            validate: isUnique,
+            getMessage: (field, params, data) => data.message
+        });
     },
 }
 </script>

@@ -17,8 +17,8 @@
     <!-- Page Loader -->
     <div class="page-loader-wrapper">
         <div class="loader">
-            <div class="preloader">
-                <div class="spinner-layer pl-red">
+            <div class="preloader pl-size-l">
+                <div class="spinner-layer pl-teal">
                     <div class="circle-clipper left">
                         <div class="circle"></div>
                     </div>
@@ -27,7 +27,7 @@
                     </div>
                 </div>
             </div>
-            <p>Please wait...</p>
+            <p>Por favor espera...</p>
         </div>
     </div>
     <!-- #END# Page Loader -->
