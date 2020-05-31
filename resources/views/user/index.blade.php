@@ -134,11 +134,7 @@
                                 </td>
                                 <td>{{$user->fecha_ingreso}}</td>
                                 <td>
-                                    @if($user->estado == 1)
-                                        Activo
-                                    @else
-                                        Inactivo
-                                    @endif
+                                    @if($user->estado == 1) Activo @else Inactivo @endif
                                 </td>
                                 <td>
                                     <div class="icon-button-demo">

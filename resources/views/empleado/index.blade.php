@@ -20,7 +20,7 @@
 @endsection
 @section('content')
 <div class="block-header">
-    <h2>DASHBOARD</h2>
+    <h2>DASHBOARD <a href="{{route('renta-excel')}}">Get rentas</a></h2>
 </div>
 
 <!-- Widgets -->
@@ -78,7 +78,7 @@
             <div class="header">
                 <div class="row clearfix">
                     <div class="col-xs-12 col-sm-6">
-                        <h2>CPU USAGE (%)</h2>
+                        <h2>CPU UTILIZADO (%)</h2>
                     </div>
                     <div class="col-xs-12 col-sm-6 align-right">
                         <div class="switch panel-switch-btn">

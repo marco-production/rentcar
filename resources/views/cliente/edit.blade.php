@@ -42,7 +42,7 @@
         <div class="card">
             <div class="header">
                 <h2>
-                    CREAR NUEVO USUARIO
+                    EDITAR CLIENTE - {{$cliente->full_name}}
                 </h2>
                 <ul class="header-dropdown m-r--5">
                     <li class="dropdown">
@@ -50,22 +50,22 @@
                             <i class="material-icons">more_vert</i>
                         </a>
                         <ul class="dropdown-menu pull-right">
-                            <li><a href="javascript:void(0);">Action</a></li>
-                            <li><a href="javascript:void(0);">Another action</a></li>
-                            <li><a href="javascript:void(0);">Something else here</a></li>
+                            <li><a href="{{route('index-cliente')}}">Listado de clientes</a></li>
+                            <li><a href="{{route('show-cliente',$cliente->slug)}}">Ver detalles de cliente</a></li>
                         </ul>
                     </li>
                 </ul>
             </div>
             <div class="body">
-                <form action="/user" method="POST">
+                <form action="/cliente/{{$cliente->slug}}" method="POST">
                 @csrf
+                @method('PUT')
                 <div class="row clearfix">
-                    <div class="col-md-12">
-                        <label for="full_name">Nombre completo</label>
+                    <div class="col-md-6">
+                        <label for="full_name">Nombre completo</label> <span class="col-pink">*</span>
                         <div class="form-group">
                             <div class="form-line">
-                                <input type="text" id="full_name" name="full_name" class="form-control" value="{{ old('full_name') }}" placeholder="Ingresa el nombre completo">
+                                <input type="text" id="full_name" name="full_name" class="form-control" value="{{$cliente->full_name}}" placeholder="Ingresa el nombre completo">
                             </div>
                             @error('full_name')
                                 <span class="invalid-feedback" style="color:#dc3545; font-size:12px;" role="alert">
@@ -74,32 +74,14 @@
                              @enderror
                         </div>
                     </div>
-                </div>
-                <div class="row clearfix">
                     <div class="col-md-6">
-                        <b>Correo electrónico</b>
-                        <div class="input-group">
-                            <span class="input-group-addon">
-                                <i class="material-icons">email</i>
-                            </span>
-                            <div class="form-line">
-                                <input type="email" class="form-control email" name="email" value="{{ old('email') }}" placeholder="Ingresa la dirección de correo electrónico">
-                            </div>
-                            @error('email')
-                                <span class="invalid-feedback" style="color:#dc3545; font-size:12px;" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <b>Cédula</b>
+                        <b>Cédula</b> <span class="col-pink">*</span>
                         <div class="input-group">
                             <span class="input-group-addon">
                                 <i class="material-icons">vpn_key</i>
                             </span>
                             <div class="form-line">
-                                <input type="text" class="form-control key" name="cedula" value="{{ old('cedula') }}" placeholder="Ex: XXX0-XXXX-XX00-X">
+                                <input type="text" class="form-control key" name="cedula" value="{{$cliente->cedula}}" placeholder="Ex: XXX0-XXXX-XX00-X">
                             </div>
                             @error('cedula')
                                 <span class="invalid-feedback" style="color:#dc3545; font-size:12px;" role="alert">
@@ -111,94 +93,80 @@
                 </div>
                 <div class="row clearfix">
                     <div class="col-md-6">
-                        <b>Tanda laboral</b>
+                        <b>No. Tarjeta CR</b>
                         <div class="input-group">
                             <span class="input-group-addon">
-                                <i class="material-icons">hourglass_full</i>
+                                <i class="material-icons">credit_card</i>
                             </span>
-                            <span class="input-group"><br>
-                                <input type="checkbox" @if(is_array(old('tanda')) && in_array('Matutina', old('tanda'))) checked @endif class="filled-in" id="ig_matutina" name="tanda[]" value="Matutina">
-                                <label for="ig_matutina" style="padding-right: 20px;">Matutina</label>
-                                <input type="checkbox" @if(is_array(old('tanda')) && in_array('Nocturna', old('tanda'))) checked @endif class="filled-in" id="ig_nocturna" name="tanda[]" value="Nocturna">
-                                <label for="ig_nocturna">Nocturna</label>
-                            </span>
-                            @error('tanda')
+                            <div class="form-line">
+                                <input type="text" class="form-control" name="numero_cr" value="{{$cliente->numero_cr}}" placeholder="Ingresa el numero de tarjeta CR">
+                            </div>
+                            @error('numero_cr')
                                 <span class="invalid-feedback" style="color:#dc3545; font-size:12px;" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
-                            @enderror                            
+                            @enderror
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <b>Comisión</b>
+                        <b>Límite de Credito</b>
                         <div class="input-group">
                             <span class="input-group-addon">
-                                <i class="material-icons">work</i>
+                                <i class="material-icons">confirmation_number</i>
                             </span>
                             <div class="form-line">
-                                <input type="text" class="form-control" name="comision" value="{{ old('comision') }}" placeholder="Ingresa porciento de comision">
+                                <input type="text" class="form-control key" name="limite" value="{{$cliente->limite_credito}}" placeholder="Ex: 0000">
                             </div>
-                            @error('comision')
+                            @error('limite')
                                 <span class="invalid-feedback" style="color:#dc3545; font-size:12px;" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
-                            @enderror                              
+                            @enderror
                         </div>
                     </div>
                 </div>
                 <div class="row clearfix">
                     <div class="col-md-6">
-                        <b>Fecha de ingreso</b>
+                        <b>Tipo de persona </b><span class="col-pink">*</span>
                         <div class="input-group">
                             <span class="input-group-addon">
-                                <i class="material-icons">date_range</i>
+                                <i class="material-icons">dialpad</i>
                             </span>
                             <div class="form-line">
-                                <input type="date" class="form-control" value="{{ old('fecha_ingreso') }}" name="fecha_ingreso">
-                            </div>
-                            @error('fecha_ingreso')
-                                <span class="invalid-feedback" style="color:#dc3545; font-size:12px;" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror  
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <b>Tipo de usuario</b>
-                        <div class="input-group">
-                            <span class="input-group-addon">
-                                <i class="material-icons">work</i>
-                            </span>
-                            <div class="form-line">
-                                <select class="form-control show-tick" name="role">
-                                    @foreach ($roles as $role)
-                                        <option value="{{$role->id}}" @if(old('role') == $role->id) selected @endif>{{$role->name}}</option>
-                                    @endforeach
+                                <select class="form-control show-tick" name="tipo" id="tipo">
+                                    <option value="">-- Seleccionar modelo --</option>
+                                    <option @if($cliente->tipo == 'Física') selected @endif value="Física">Física</option>
+                                    <option @if($cliente->tipo == 'Jurídica') selected @endif value="Jurídica">Jurídica</option>
                                 </select>
                             </div>
-                            @error('role')
+                            @error('tipo')
                                 <span class="invalid-feedback" style="color:#dc3545; font-size:12px;" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
-                            @enderror                             
+                            @enderror 
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <b>Estado </b><span class="col-pink">*</span>
+                        <div class="input-group">
+                            <div class="demo-radio-button">
+                                <input name="estado" @if($cliente->estado == true) checked @endif value="1" type="radio" class="with-gap" id="radio_1" />
+                                <label for="radio_1">Activo</label>
+                                <input name="estado" @if($cliente->estado == false) checked @endif value="0" type="radio" id="radio_2"  class="with-gap" />
+                                <label for="radio_2">Inactivo</label>
+                            </div>
+                            @error('estado')
+                                <span class="invalid-feedback" style="color:#dc3545; font-size:12px;" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror 
                         </div>
                     </div>
                 </div>
                 <div class="row clearfix">
                     <div class="col-md-12">
-                        <b>Contraseña</b>
                         <div class="form-group">
-                            <input type="hidden" name="password" id="password">
-                            <ul class="list-group">
-                                <li class="list-group-item" id="password-token" style="background-color: #68686833;"></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="row clearfix">
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-block btn-lg btn-success waves-effect">CREAR USUARIO</button>
+                            <button type="submit" class="btn btn-block btn-lg btn-success waves-effect">CREAR CLIENTE</button>
                         </div>
                     </div>
                 </div>

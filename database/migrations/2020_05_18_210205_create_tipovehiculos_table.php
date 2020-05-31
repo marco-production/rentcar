@@ -16,7 +16,7 @@ class CreateTipovehiculosTable extends Migration
         Schema::create('tipovehiculos', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->text('descripcion')->nullable();
+            $table->text('descripcion');
             $table->boolean('estado')->default(true);
             $table->string('slug');
             $table->timestamps();

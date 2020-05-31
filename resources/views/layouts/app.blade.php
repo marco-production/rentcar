@@ -298,7 +298,19 @@
                         </a>
                     </li>
                     <li>
-                        <a href="pages/typography.html">
+                        <a href="{{route('index-renta')}}">
+                            <i class="material-icons">shopping_cart</i>
+                            <span>Renta y Devolución</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{route('index-cliente')}}">
+                            <i class="material-icons">people</i>
+                            <span>Clientes</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{route('index-vehiculo')}}">
                             <i class="material-icons">directions_car</i>
                             <span>Vehiculos</span>
                         </a>
@@ -310,27 +322,21 @@
                         </a>
                     </li>
                     <li>
-                        <a href="pages/typography.html">
+                        <a href="{{route('empleado-marca')}}">
                             <i class="material-icons">collections_bookmark</i>
                             <span>Marcas</span>
                         </a>
                     </li>
                     <li>
-                        <a href="pages/typography.html">
+                        <a href="{{route('empleado-modelo')}}">
                             <i class="material-icons">dialpad</i>
                             <span>Modelos</span>
                         </a>
                     </li>
                     <li>
-                        <a href="pages/typography.html">
+                        <a href="{{route('empleado-combustible')}}">
                             <i class="material-icons">local_gas_station</i>
-                            <span>Combistibles</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="pages/typography.html">
-                            <i class="material-icons">people</i>
-                            <span>Clientes</span>
+                            <span>Combustibles</span>
                         </a>
                     </li>
                     @endif
@@ -340,7 +346,7 @@
             <!-- Footer -->
             <div class="legal">
                 <div class="copyright">
-                    &copy; 2020 <a href="javascript:void(0);">Focus Rentcar Inc.</a>.
+                    &copy; 2020 <a href="javascript:void(0);">Focus Rentcar Inc.</a>
                 </div>
                 <div class="version">
                     <b>Version: </b> 1.0.5

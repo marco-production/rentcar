@@ -38,7 +38,7 @@
 @endsection
 @section('content')
 <div class="container-fluid">
-    <basic-crud-component api_url="/tipovehiculo" model_name="tipo de vehiculo" genero="El"></basic-crud-component>
+    <basic-crud-component api_url="/marca" model_name="marca" genero="La"></basic-crud-component>
 </div>
 @endsection
 @section('scripts')

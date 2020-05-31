@@ -27,7 +27,8 @@ Validator.localize('es', es);
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('tipo-vehiculo-component', require('./components/TipoVehiculoComponent.vue').default);
+Vue.component('basic-crud-component', require('./components/CrudBasicoComponent.vue').default);
+Vue.component('modelo-component', require('./components/ModeloComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

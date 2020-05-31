@@ -24,5 +24,16 @@ class UserSeeder extends Seeder
             'slug'=>'marco-antonio',
             'role_id'=>1
         ]);
+
+        User::create([
+            'full_name'=>'Jose Santos',
+            'email'=>'hola@hotmail.com',
+            'cedula'=>'124345537',
+            'tanda'=>'Matutina,Nocturnas',
+            'comision'=>'15%',
+            'password'=>bcrypt('12345678'),
+            'slug'=>'jose-santos',
+            'role_id'=>2
+        ]);
     }
 }

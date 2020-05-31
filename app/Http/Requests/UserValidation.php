@@ -29,8 +29,16 @@ class UserValidation extends FormRequest
             'cedula'=>'required|numeric|unique:users',
             'tanda'=>'required',
             'comision'=>'required|max:190',
-            'fecha_ingreso'=>'required|date',
+            'fecha_ingreso'=>'required|date|before:tomorrow',
             'role'=>'required',
+        ];
+    }
+
+    public function messages(){
+        return [
+            'fecha_renta.required'=>'La fecha de ingreso debe ser desde el día en hoy hacia atras.',
+            'fecha_renta.before'=>'La fecha de ingreso debe ser antes desde el dia d.',
+            'full_name.required'=>'El nombre completo es obligatorio.',
         ];
     }
 }

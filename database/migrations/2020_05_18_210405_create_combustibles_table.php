@@ -16,7 +16,7 @@ class CreateCombustiblesTable extends Migration
         Schema::create('combustibles', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->text('descripcion')->nullable();
+            $table->text('descripcion');
             $table->boolean('estado')->default(true);
             $table->string('slug');
             $table->timestamps();

@@ -42,7 +42,7 @@
         <div class="card">
             <div class="header">
                 <h2>
-                    ACTUALIZAR USUARIO - {{$user->full_name}}
+                    EDITAR USUARIO - {{$user->full_name}}
                 </h2>
                 <ul class="header-dropdown m-r--5">
                     <li class="dropdown">
@@ -155,7 +155,7 @@
                                 <i class="material-icons">date_range</i>
                             </span>
                             <div class="form-line">
-                                <input type="date" class="form-control" value="{{$user->fecha_ingreso}}" name="fecha_ingreso">
+                                <input type="date" class="form-control" value="{{ $user->fecha_ingreso->format('Y-m-d') }}" name="fecha_ingreso">
                             </div>
                             @error('fecha_ingreso')
                                 <span class="invalid-feedback" style="color:#dc3545; font-size:12px;" role="alert">

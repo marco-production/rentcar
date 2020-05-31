@@ -16,10 +16,13 @@ class CreateModelosTable extends Migration
         Schema::create('modelos', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->text('descripcion')->nullable();
+            $table->text('descripcion');
             $table->boolean('estado')->default(true);
+            $table->integer('marca_id')->unsigned();
             $table->string('slug');
             $table->timestamps();
+
+            $table->foreign('marca_id')->references('id')->on('marcas')->onDelete('cascade');
         });
     }
 

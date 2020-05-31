@@ -25,7 +25,7 @@
     <link href="{{ asset('plugins/bootstrap-tagsinput/bootstrap-tagsinput.css') }}" rel="stylesheet">
 
     <!-- Bootstrap Select Css -->
-    <link href="{{ asset('plugins/bootstrap-select/css/bootstrap-select.css') }}" rel="stylesheet" />
+    <!--link href="{{ asset('plugins/bootstrap-select/css/bootstrap-select.css') }}" rel="stylesheet" /-->
 
     <!-- noUISlider Css -->
     <link href="{{ asset('plugins/nouislider/nouislider.min.css') }}" rel="stylesheet" />
@@ -38,7 +38,7 @@
 @endsection
 @section('content')
 <div class="container-fluid">
-    <basic-crud-component api_url="/tipovehiculo" model_name="tipo de vehiculo" genero="El"></basic-crud-component>
+    <modelo-component></modelo-component>
 </div>
 @endsection
 @section('scripts')
@@ -50,7 +50,7 @@
     <script src="{{ asset('plugins/bootstrap/js/bootstrap.js')}}"></script>
 
     <!-- Select Plugin Js -->
-    <script src="{{ asset('plugins/bootstrap-select/js/bootstrap-select.js')}}"></script>
+    <!--script src="{{ asset('plugins/bootstrap-select/js/bootstrap-select.js')}}"></script-->
 
     <!-- Slimscroll Plugin Js -->
     <script src="{{ asset('plugins/jquery-slimscroll/jquery.slimscroll.js')}}"></script>
