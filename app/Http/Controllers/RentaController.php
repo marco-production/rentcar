@@ -20,9 +20,27 @@ use App\Exports\RentaExport;
 class RentaController extends Controller
 {
 
-    public function exportExcel()
+    //php artisan make:export RentaExport --model=Renta
+    public function reporte()
     {
-        return Excel::download(new RentaExport, 'Reporte-de-renta.xlsx');
+        $tipo_vehiculos = Tipovehiculo::orderBy('name','ASC')->get();
+        $empleados = User::orderBy('full_name','ASC')->where('role_id',2)->get();
+
+        return view('renta.reporte',compact('tipo_vehiculos','empleados'));
+    }
+
+
+    public function exportExcel(Request $request)
+    {
+        $tipo_vehiculo = $request->get('tipo_vehiculo');
+        $empleado = $request->get('empleado');
+        $fecha_renta = $request->get('fecha_renta');
+        $fecha_devolucion = $request->get('fecha_devolucion');
+        $estado = $request->get('estado');
+
+        //return redirect()->back()->with('status','No existen registros con estas especificaciones!');
+
+        return Excel::download(new RentaExport($tipo_vehiculo, $empleado, $fecha_renta, $fecha_devolucion, $estado), 'Reporte-de-renta.xlsx');
     }
 
     /**
@@ -164,6 +182,7 @@ class RentaController extends Controller
         $renta = Renta::where('slug',$slug)->firstOrFail();
         $vehiculo = Vehiculo::find($request->vehiculo);
         $cliente = Cliente::find($request->cliente);
+        //$inspeccion = Inspeccion::where('renta_id',$renta->id)->first();
 
         if($renta->cliente_id != $request->cliente){
             $renta->slug = str_slug($cliente->full_name.' '.'renta'.' '.time(),'-');
@@ -181,8 +200,9 @@ class RentaController extends Controller
 
         if($request->estado == false){
             $vehiculo->estado = true;
+            //$inspeccion->estado = false;
         }else{
-            $this_renta = Renta::where('vehiculo_id',$vehiculo->id)->where('estado',true)->count();
+            $this_renta = Renta::where('id','!=',$renta->id)->where('vehiculo_id',$vehiculo->id)->where('estado',true)->count();
             if ($this_renta == 0) {
                 $vehiculo->estado = false;
             } else {
@@ -190,10 +210,9 @@ class RentaController extends Controller
             }
         }
         
-        //$vehiculo->estado = false;
-
         $renta->save();
         $vehiculo->save();
+        //$inspeccion->save();
 
         return redirect()->route('show-renta',$renta->slug)->with('status','Renta actualuzada exitosamente!!');
     }
@@ -207,12 +226,15 @@ class RentaController extends Controller
     public function destroy($slug)
     {
         $renta = Renta::where('slug',$slug)->firstOrFail();
-        $inspeccion = Inspeccion::where('renta_id',$renta->id)->firstOrFail();
+        $inspeccion = Inspeccion::where('renta_id',$renta->id)->first();
         $vehiculo = Vehiculo::find($renta->vehiculo_id);
         $vehiculo->estado = true;
 
+        if (isset($inspeccion)) {
+            $inspeccion->delete();
+        }
+        
         $vehiculo->save();
-        $inspeccion->delete();
         $renta->delete();
 
         return redirect()->route('index-renta')->with('delete','El vehiculo ha sido eliminado exitosamente!');

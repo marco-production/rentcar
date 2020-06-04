@@ -2,6 +2,10 @@
 @section('content')
 <div class="card position">
     <h4 class="l-login">Login</h4>
+    @if (session('state'))
+       <div class="alert alert-danger">{{session('state')}}</div> 
+    @endif
+    
     <form class="col-md-12" id="sign_in" method="POST" action="{{ route('login') }}">
         @csrf
         <div class="form-group form-float">

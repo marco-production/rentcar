@@ -20,7 +20,7 @@
 @endsection
 @section('content')
 <div class="block-header">
-    <h2>DASHBOARD <a href="{{route('renta-excel')}}">Get rentas</a></h2>
+    <h2>DASHBOARD</h2>
 </div>
 
 <!-- Widgets -->
@@ -28,44 +28,44 @@
     <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
         <div class="info-box bg-pink hover-expand-effect">
             <div class="icon">
-                <i class="material-icons">playlist_add_check</i>
+                <i class="material-icons">directions_car</i>
             </div>
             <div class="content">
-                <div class="text">NEW TASKS</div>
-                <div class="number count-to" data-from="0" data-to="125" data-speed="15" data-fresh-interval="20"></div>
+                <div class="text">VEHICULOS</div>
+                <div class="number count-to" data-from="0" data-to="{{$vehiculos}}" data-speed="15" data-fresh-interval="20"></div>
             </div>
         </div>
     </div>
     <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
         <div class="info-box bg-cyan hover-expand-effect">
             <div class="icon">
-                <i class="material-icons">help</i>
+                <i class="material-icons">people</i>
             </div>
             <div class="content">
-                <div class="text">NEW TICKETS</div>
-                <div class="number count-to" data-from="0" data-to="257" data-speed="1000" data-fresh-interval="20"></div>
+                <div class="text">CLIENTES</div>
+                <div class="number count-to" data-from="0" data-to="{{$clientes}}" data-speed="1000" data-fresh-interval="20"></div>
             </div>
         </div>
     </div>
     <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
         <div class="info-box bg-light-green hover-expand-effect">
             <div class="icon">
-                <i class="material-icons">forum</i>
+                <i class="material-icons">shopping_cart</i>
             </div>
             <div class="content">
-                <div class="text">NEW COMMENTS</div>
-                <div class="number count-to" data-from="0" data-to="243" data-speed="1000" data-fresh-interval="20"></div>
+                <div class="text">RENTAS ACTIVAS</div>
+                <div class="number count-to" data-from="0" data-to="{{$rentas_activa}}" data-speed="1000" data-fresh-interval="20"></div>
             </div>
         </div>
     </div>
     <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
         <div class="info-box bg-orange hover-expand-effect">
             <div class="icon">
-                <i class="material-icons">person_add</i>
+                <i class="material-icons">shopping_cart</i>
             </div>
             <div class="content">
-                <div class="text">NEW VISITORS</div>
-                <div class="number count-to" data-from="0" data-to="1225" data-speed="1000" data-fresh-interval="20"></div>
+                <div class="text">RENTAS COMPLETADAS</div>
+                <div class="number count-to" data-from="0" data-to="{{$rentas_inactiva}}" data-speed="1000" data-fresh-interval="20"></div>
             </div>
         </div>
     </div>

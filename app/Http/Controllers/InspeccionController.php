@@ -49,9 +49,14 @@ class InspeccionController extends Controller
      */
     public function store(InspeccionValidation $request)
     {
+        $renta = Renta::find($request->renta);
         $inspeccion = new Inspeccion();
         
-        $gomas = implode(',',$request->gomas);
+        if ($request->gomas) {
+            $gomas = implode(',',$request->gomas);
+            $inspeccion->gomas = $gomas;
+        }
+
         $inspeccion->renta_id = $request->renta;
         $inspeccion->fecha_inspeccion = $request->fecha_inspeccion;
         
@@ -60,21 +65,20 @@ class InspeccionController extends Controller
         $inspeccion->goma_repuesto = $request->goma_repuesto;
         $inspeccion->gato = $request->gato;
         $inspeccion->rotura_cristal = $request->rotura_cristal;
-        $inspeccion->gomas = $gomas;
         $inspeccion->combustible = $request->combustible;
         $inspeccion->estado = $request->estado;
 
         $vehiculo = Vehiculo::join('tipovehiculos','tipovehiculos.id','vehiculos.tipovehiculo_id')
         ->join('marcas','marcas.id','vehiculos.marca_id')
         ->join('modelos','modelos.id','vehiculos.modelo_id')
-        ->where('vehiculos.id',$inspeccion->renta_id)
+        ->where('vehiculos.id',$renta->vehiculo_id)
         ->select('vehiculos.anio','marcas.name AS marca_name','modelos.name AS modelo_name')
         ->firstOrFail();
         
         $inspeccion->slug = str_slug($vehiculo->marca_name.' '.$vehiculo->modelo_name.' '.$vehiculo->anio.' '.time(),'-');
         $inspeccion->save();
 
-        return $request;
+        return redirect()->route('show-renta',$renta->slug)->with('status','Inspeccion registrada exitosamente!!');
     }
 
     /**
@@ -99,13 +103,13 @@ class InspeccionController extends Controller
     {
         $inspeccion = Inspeccion::where('slug',$slug)->firstOrFail();
         $empleados = User::orderBy('full_name','ASC')->where('role_id',2)->where('estado',true)->get();
-        $renta = Renta::find($inspeccion->id)->select('id')->firstOrFail();
+        $renta = Renta::find($inspeccion->renta_id)->select('id','vehiculo_id')->firstOrFail();
         $gomas = explode(',',$inspeccion->gomas);
 
         $vehiculo = Vehiculo::join('tipovehiculos','tipovehiculos.id','vehiculos.tipovehiculo_id')
         ->join('marcas','marcas.id','vehiculos.marca_id')
         ->join('modelos','modelos.id','vehiculos.modelo_id')
-        ->where('vehiculos.id',$renta->id)
+        ->where('vehiculos.id',$renta->vehiculo_id)
         ->select('vehiculos.*','marcas.name AS marca_name','modelos.name AS modelo_name')
         ->firstOrFail();
         
@@ -119,9 +123,41 @@ class InspeccionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $slug)
     {
-        //
+       // return $request;
+        $inspeccion = Inspeccion::where('slug',$slug)->firstOrFail();
+        $renta = Renta::find($inspeccion->renta_id);
+        
+        if ($request->gomas) {
+            $gomas = implode(',',$request->gomas);
+            $inspeccion->gomas = $gomas;
+        }else{
+            $inspeccion->gomas = null;
+        }
+
+       // $inspeccion->renta_id = $request->renta;
+        $inspeccion->fecha_inspeccion = $request->fecha_inspeccion;
+        
+        $inspeccion->empleado_id = $request->empleado;
+        $inspeccion->ralladura = $request->ralladura;
+        $inspeccion->goma_repuesto = $request->goma_repuesto;
+        $inspeccion->gato = $request->gato;
+        $inspeccion->rotura_cristal = $request->rotura_cristal;
+        $inspeccion->combustible = $request->combustible;
+        $inspeccion->estado = $request->estado;
+
+        $vehiculo = Vehiculo::join('tipovehiculos','tipovehiculos.id','vehiculos.tipovehiculo_id')
+        ->join('marcas','marcas.id','vehiculos.marca_id')
+        ->join('modelos','modelos.id','vehiculos.modelo_id')
+        ->where('vehiculos.id',$renta->vehiculo_id)
+        ->select('vehiculos.anio','marcas.name AS marca_name','modelos.name AS modelo_name')
+        ->firstOrFail();
+        
+        $inspeccion->slug = str_slug($vehiculo->marca_name.' '.$vehiculo->modelo_name.' '.$vehiculo->anio.' '.time(),'-');
+        $inspeccion->save();
+
+        return redirect()->route('show-renta',$renta->slug)->with('status','Inspeccion actualizada exitosamente!!');
     }
 
     /**
@@ -130,8 +166,12 @@ class InspeccionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($slug)
     {
-        //
+        $inspeccion = Inspeccion::where('slug',$slug)->firstOrFail();
+        $renta = Renta::find($inspeccion->renta_id);
+        $inspeccion->delete();
+
+        return redirect()->route('show-renta',$renta->slug)->with('status','Inspeccion eliminada exitosamente!!');
     }
 }

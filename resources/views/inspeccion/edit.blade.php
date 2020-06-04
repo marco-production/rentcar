@@ -207,7 +207,7 @@
                                     <option @if($inspeccion->combustible == '1/4') selected @endif value="1/4">1/4</option>
                                     <option @if($inspeccion->combustible == '1/2') selected @endif value="1/2">1/2</option>
                                     <option @if($inspeccion->combustible == '3/4') selected @endif value="3/4">3/4</option>
-                                    <option @if($inspeccion->combustible == 'Tanque lleno') selected @endif value="Tanque Lleno">Tanque Lleno</option>
+                                    <option @if($inspeccion->combustible == 'Tanque lleno') selected @endif value="Tanque lleno">Tanque lleno</option>
                                 </select>
                             </div>
                             @error('combustible')
@@ -221,9 +221,9 @@
                         <b>Estado </b><span class="col-pink">*</span>
                         <div class="input-group">
                             <div class="demo-radio-button">
-                                <input name="estado" @if($renta->estado == true) checked @endif value="true" type="radio" class="with-gap" id="radio_11" />
+                                <input name="estado" @if($inspeccion->estado == true) checked @endif value="1" type="radio" class="with-gap" id="radio_11" />
                                 <label for="radio_11">Activo</label>
-                                <input name="estado" @if($renta->estado == false) checked @endif value="false" type="radio" id="radio_12"  class="with-gap" />
+                                <input name="estado" @if($inspeccion->estado == false) checked @endif value="0" type="radio" id="radio_12"  class="with-gap" />
                                 <label for="radio_12">Inactivo</label>
                             </div>
                             @error('estado')
@@ -237,7 +237,7 @@
                 <div class="row clearfix">
                     <div class="col-md-12">
                         <div class="form-group">
-                            <button type="submit" class="btn btn-block btn-lg btn-success waves-effect">REGISTRAR</button>
+                            <button type="submit" class="btn btn-block btn-lg btn-success waves-effect">ACTUALIZAR</button>
                         </div>
                     </div>
                 </div>

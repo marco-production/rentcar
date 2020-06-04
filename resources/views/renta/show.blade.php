@@ -96,8 +96,8 @@
                             <ul class="dropdown-menu pull-right">
                                 <li><a href="{{route('edit-inspeccion', $inspeccion->slug)}}">Editar</a></li>
                                 <li>
-                                    <a href="#" onclick="if(confirm('¿Deseas eliminar esta renta?')){document.getElementById('form').submit();}">Eliminar</a>
-                                    <form action="/inspeccion/{{$inspeccion->slug}}" method="POST" id="form" style="display: contents;">
+                                    <a href="#" onclick="if(confirm('¿Deseas eliminar esta inspeccion?')){document.getElementById('form-inspeccion').submit();}">Eliminar</a>
+                                    <form action="/inspeccion/{{$inspeccion->slug}}" method="POST" id="form-inspeccion" style="display: contents;">
                                         @csrf
                                         @method('DELETE')
                                     </form>
@@ -121,11 +121,15 @@
                             <p><b>Estado de inspección:</b> @if($inspeccion->estado) Activo @else Inactivo @endif</p>
                             <p><b>Cantidad de combustible:</b> {{$inspeccion->combustible}}</p>
                             <hr>
-                            <p><b>Estado gomas </b>(<small class="col-pink">Gomas con algun problema o en mal estado</small>)</p>
+                            <p><b>Estado gomas </b>@if ($inspeccion->gomas != null)(<small class="col-pink">Gomas con algun problema o en mal estado</small>)@endif</p>
                             <ul>
-                            @for ($i = 0; $i < count($gomas); $i++)
-                                <li>{{$gomas[$i]}}</li>
-                            @endfor
+                            @if ($inspeccion->gomas == null)
+                                <li><i>Todas las gomas estan en buen estado.</i></li>
+                            @else
+                                @for ($i = 0; $i < count($gomas); $i++)
+                                    <li>{{$gomas[$i]}}</li>
+                                @endfor
+                            @endif
                             </ul>                   
                         </div>
                     </div>

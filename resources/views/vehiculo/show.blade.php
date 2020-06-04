@@ -74,6 +74,7 @@
                             <p><b># Placa:</b> {{$vehiculo->placa}}</p>
                             <p><b>Estado:</b> @if($vehiculo->estado == 1) Activo @else Inactivo @endif</p>
                             <p><b>Fecha de creación:</b> {{date('d-m-Y', strtotime($vehiculo->created_at))}}</p>
+                            <p><b>Descripcion:</b> {{$vehiculo->descripcion}}</p>
                         </div>
                     </div>
                 </div>

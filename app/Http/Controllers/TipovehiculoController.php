@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Vehiculo;
+use App\Cliente;
 use App\Tipovehiculo;
+use App\Renta;
 use Illuminate\Http\Request;
 use App\Http\Requests\BasicValidation;
 
@@ -15,7 +18,11 @@ class TipovehiculoController extends Controller
      */
     public function home()
     {
-        return view('empleado.index');
+        $vehiculos = Vehiculo::All()->count();
+        $clientes = Cliente::All()->count();
+        $rentas_activa = Renta::where('estado',1)->count();
+        $rentas_inactiva = Renta::where('estado',0)->count();
+        return view('empleado.index',compact('vehiculos','clientes','rentas_activa','rentas_inactiva'));
     }
 
     public function index(Request $request)

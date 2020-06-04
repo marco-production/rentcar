@@ -25,4 +25,9 @@ class HomeController extends Controller
     {
         return view('home');
     }
+
+    public function inactivo()
+    {
+        return view('user.inactivo');
+    }
 }

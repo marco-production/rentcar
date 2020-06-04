@@ -26,7 +26,7 @@ class InspeccionValidation extends FormRequest
         return [
             'renta'=>'required',
             'empleado'=>'required',
-            'fecha_inspeccion'=>'required|date',
+            'fecha_inspeccion'=>'required|date|before:tomorrow',
             'ralladura'=>'required',
             'goma_repuesto'=>'required',
             'gato'=>'required',
@@ -34,6 +34,12 @@ class InspeccionValidation extends FormRequest
             'gomas[]'=>'nullable',
             'combustible'=>'required|string',
             'estado'=>'required',
+        ];
+    }
+
+    public function messages(){
+        return [
+            'fecha_inspeccion.before'=>'El campo fecha de inspeccion debe ser una fecha inferior al dia de mañana.',
         ];
     }
 }

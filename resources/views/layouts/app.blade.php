@@ -339,6 +339,12 @@
                             <span>Combustibles</span>
                         </a>
                     </li>
+                    <li>
+                        <a href="{{route('reporte-renta')}}">
+                            <i class="material-icons">assignment</i>
+                            <span>Reporte de renta</span>
+                        </a>
+                    </li>
                     @endif
                 </ul>
             </div>

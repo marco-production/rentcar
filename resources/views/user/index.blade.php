@@ -132,7 +132,7 @@
                                     <span class="label bg-blue-grey">Empleado</span>
                                     @endif
                                 </td>
-                                <td>{{$user->fecha_ingreso}}</td>
+                                <td>{{$user->fecha_ingreso->format('Y-m-d')}}</td>
                                 <td>
                                     @if($user->estado == 1) Activo @else Inactivo @endif
                                 </td>

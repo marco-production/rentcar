@@ -43,6 +43,7 @@
                                 <i class="material-icons">more_vert</i>
                             </a>
                             <ul class="dropdown-menu pull-right">
+                                <li><a href="{{url('/')}}">Lista de usuarios</a></li>
                                 <li><a href="{{route('edit-user',$user->slug)}}">Editar</a></li>
                                 <li>
                                     <a href="#" onclick="if(confirm('¿Deseas eliminar este usuario?')){document.getElementById('form').submit();}">Eliminar</a>

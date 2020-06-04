@@ -197,7 +197,7 @@
                                     <option @if(old('combustible') == '1/4') selected @endif value="1/4">1/4</option>
                                     <option @if(old('combustible') == '1/2') selected @endif value="1/2">1/2</option>
                                     <option @if(old('combustible') == '3/4') selected @endif value="3/4">3/4</option>
-                                    <option @if(old('combustible') == 'Tanque lleno') selected @endif value="Tanque Lleno">Tanque Lleno</option>
+                                    <option @if(old('combustible') == 'Tanque lleno') selected @endif value="Tanque lleno">Tanque lleno</option>
                                 </select>
                             </div>
                             @error('combustible')
@@ -211,7 +211,7 @@
                         <b>Estado </b><span class="col-pink">*</span>
                         <div class="input-group">
                             <div class="demo-radio-button">
-                                <input name="estado" @if(old('estado') == 1) checked @endif value="1" type="radio" class="with-gap" id="radio_11" />
+                                <input name="estado" @if(old('estado') == 1) checked @endif value="1" checked type="radio" class="with-gap" id="radio_11"/>
                                 <label for="radio_11">Activo</label>
                                 <input name="estado" @if(old('estado') == 2) checked @endif value="2" type="radio" id="radio_12"  class="with-gap" />
                                 <label for="radio_12">Inactivo</label>

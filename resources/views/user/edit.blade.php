@@ -171,7 +171,7 @@
                                 <i class="material-icons">work</i>
                             </span>
                             <div class="form-line">
-                                <select class="form-control show-tick" name="role">
+                                <select class="form-control show-tick" name="role" disabled>
                                     @foreach ($roles as $role)
                                         <option value="{{$role->id}}" @if ($user->role_id == $role->id) selected @endif>{{$role->name}}</option>
                                     @endforeach
@@ -193,7 +193,7 @@
                             <div class="form-line">
                                 <select class="form-control show-tick" name="estado">
                                     <option value="1" @if($user->estado == true) selected @endif>Activo</option>
-                                    <option value="0" @if($user->estado == false) selected @endif>Inactivo</option>
+                                    <option value="2" @if($user->estado == false) selected @endif>Inactivo</option>
                                 </select>
                             </div>
                         </div>

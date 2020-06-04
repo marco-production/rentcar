@@ -20,7 +20,7 @@ class CreateInspeccionsTable extends Migration
             $table->string('goma_repuesto')->default(false);
             $table->string('gato')->default(false);
             $table->string('rotura_cristal')->default(false);
-            $table->string('gomas')->nullable()->default('true,true,true,true');
+            $table->string('gomas')->nullable()->default(null);
             $table->date('fecha_inspeccion');
             $table->integer('renta_id')->unsigned();
             //$table->integer('cliente_id')->unsigned();

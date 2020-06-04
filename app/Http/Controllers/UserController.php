@@ -114,7 +114,7 @@ class UserController extends Controller
         $user->cedula = $request->cedula;
         $user->tanda = $tanda;
         $user->comision = $request->comision;
-        $user->password = Hash::make($request->password);
+        //$user->password = Hash::make($request->password);
         $user->fecha_ingreso = $request->fecha_ingreso;
         $user->role_id = $request->role;
         $user->estado = $estado;

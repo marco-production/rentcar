@@ -113,7 +113,7 @@
                                 <!--td>{{$renta->full_name}}</td-->
                                 <td style="text-align: center;">
                                     @if($renta->inspeccion_count > 0)
-                                        <a href="{{route('show-inspeccion',$renta->inspeccion_slug)}}" class="btn btn-warning waves-effect"><i class="material-icons">lock</i></a>
+                                        <a href="{{route('show-renta', $renta->slug)}}" class="btn btn-warning waves-effect"><i class="material-icons">lock</i></a>
                                     @else
                                         <a href="{{route('create-inspeccion',$renta->slug)}}" class="btn bg-teal btn-sm waves-effect"><i class="material-icons">lock_open</i></a>
                                     @endif

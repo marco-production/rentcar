@@ -15,11 +15,12 @@ class UserSeeder extends Seeder
         User::truncate();
     
         User::create([
-            'full_name'=>'Marco Antonio De la cruz Santos',
+            'full_name'=>'Marco Antonio',
             'email'=>'laradex@hotmail.com',
             'cedula'=>'124345535',
             'tanda'=>'Matutina,Nocturnas',
             'comision'=>'15%',
+            'fecha_ingreso'=>'2019-06-04',
             'password'=>bcrypt('12345678'),
             'slug'=>'marco-antonio',
             'role_id'=>1
@@ -31,6 +32,7 @@ class UserSeeder extends Seeder
             'cedula'=>'124345537',
             'tanda'=>'Matutina,Nocturnas',
             'comision'=>'15%',
+            'fecha_ingreso'=>'2020-06-04',
             'password'=>bcrypt('12345678'),
             'slug'=>'jose-santos',
             'role_id'=>2
