@@ -38,7 +38,7 @@ class ModeloController extends Controller
      */
     public function create()
     {
-        //$marcas = Marca::orderBy('name','ASC')->get();
+        $marcas = Marca::orderBy('name','ASC')->get();
         return view('empleado.modelo',compact('marcas'));
     }
 
