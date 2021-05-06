@@ -16,7 +16,7 @@ class UserSeeder extends Seeder
     
         User::create([
             'full_name'=>'Marco Antonio',
-            'email'=>'laradex@hotmail.com',
+            'email'=>'admin@hotmail.com',
             'cedula'=>'124345535',
             'tanda'=>'Matutina,Nocturnas',
             'comision'=>'15%',
@@ -28,7 +28,7 @@ class UserSeeder extends Seeder
 
         User::create([
             'full_name'=>'Jose Santos',
-            'email'=>'hola@hotmail.com',
+            'email'=>'user@hotmail.com',
             'cedula'=>'124345537',
             'tanda'=>'Matutina,Nocturnas',
             'comision'=>'15%',

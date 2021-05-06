@@ -37,9 +37,17 @@
         <button type="submit" class="btn btn-raised bg-cyan waves-effect">
             Iniciar Sesión
         </button>
-        @if (Route::has('password.request'))
+        <div class="mt-5">
+            <div class="alert alert-secondary">
+                <strong>CREDENCIALES</strong><hr>
+                <p><span class="label bg-blue">Admin</span><i> admin@hotmail.com</i> <br><span class="label bg-light-green">User</span> <i>user@hotmail.com</i></p>
+                <hr>
+                <p><span class="label bg-teal">Password</span> 12345678</p>
+            </div>
+        </div>
+        {{-- @if (Route::has('password.request'))
             <div class="text-left"> <a href="{{ route('password.request') }}">¿Olvidaste tu contraseña?</a> </div>
-        @endif
+        @endif --}}
     </form>
 </div>
 @endsection

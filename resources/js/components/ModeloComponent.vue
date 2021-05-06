@@ -229,6 +229,7 @@ export default {
             DbName: null,
             showAlert:false,
             textAlert:'',
+            csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
         }
     },
     created() {
@@ -253,7 +254,7 @@ export default {
                     
                     this.cancelUpdate(true);
 
-                    axios.post('/modelo',param)
+                    axios.post('/modelo', param, { headers: { 'x-csrf-token': this.csrf }})
                     .then((res)=>{
                         this.Items.push(res.data);
                         this.textAlert = `El modelo ${res.data.name} ha sido añadido exitosamente!!`;
@@ -290,7 +291,7 @@ export default {
                     this.$validator.pause();
                     let param = {name: data.name, descripcion: data.descripcion, estado: data.estado, marca: this.myData.marca}
 
-                    axios.put(`/modelo/${data.id}`,param)
+                    axios.put(`/modelo/${data.id}`, param, { headers: { 'x-csrf-token': this.csrf }})
                     .then((res)=>{
                         this.cancelUpdate(true);
                         let index = this.Items.findIndex(laNota => laNota.id == data.id);
@@ -313,7 +314,7 @@ export default {
             this.showAlert = false;
             this.cancelUpdate(true);
             if(confirm(`¿Desea eliminar la tarea ${data.name}?`)){
-                axios.delete(`/modelo/${data.slug}`)
+                axios.delete(`/modelo/${data.slug}`, { headers: { 'x-csrf-token': this.csrf }})
                 .then((res)=>{
                     this.Items.splice(index,1);
                     this.showAlert = true;

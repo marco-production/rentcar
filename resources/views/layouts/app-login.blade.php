@@ -6,7 +6,7 @@
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <title>:: Focus Rentcar ::</title>
-        <link rel="icon" type="image/ico" href="{{ asset('images/favicon.ico')}}">
+        <link rel="icon" type="image/ico" href="{{ asset('images/favicon.png')}}">
         <!-- Custom Css -->
         {{-- <link href="{{ asset('css/app.css') }}" rel="stylesheet"> --}}
         <link href="{{ asset('extras/bootstrap.min.css') }}" rel="stylesheet" />

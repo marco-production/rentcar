@@ -191,6 +191,7 @@ export default {
             DbName: null,
             showAlert:false,
             textAlert:'',
+            csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
         }
     },
     props:['api_url','model_name','genero'],
@@ -215,7 +216,7 @@ export default {
                     
                     this.cancelUpdate(true);
 
-                    axios.post(this.api_url,param)
+                    axios.post(this.api_url, param, { headers: { 'x-csrf-token': this.csrf }})
                     .then((res)=>{
                         this.Items.push(res.data);
                         this.textAlert = `${this.genero} ${this.model_name} ${res.data.name} ha sido añadido exitosamente!!`;
@@ -251,7 +252,7 @@ export default {
                     this.$validator.pause();
                     let param = {name: data.name, descripcion: data.descripcion, estado: data.estado}
 
-                    axios.put(`${this.api_url}/${data.id}`,param)
+                    axios.put(`${this.api_url}/${data.id}`, param, { headers: { 'x-csrf-token': this.csrf }})
                     .then((res)=>{
                         this.cancelUpdate(true);
                         let index = this.Items.findIndex(laNota => laNota.id == data.id);
@@ -274,7 +275,7 @@ export default {
             this.showAlert = false;
             this.cancelUpdate(true);
             if(confirm(`¿Desea eliminar la tarea ${data.name}?`)){
-                axios.delete(`${this.api_url}/${data.slug}`)
+                axios.delete(`${this.api_url}/${data.slug}`, { headers: { 'x-csrf-token': this.csrf }})
                 .then((res)=>{
                     this.Items.splice(index,1);
                     this.showAlert = true;
